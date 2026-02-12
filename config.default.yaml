@@ -1,0 +1,29 @@
+server:
+  listen: ":8080"
+
+ldap:
+  url: "ldap://authentik-ldap:3389"
+  base_dn: "dc=example,dc=com"
+  bind_dn: "cn=admin,dc=example,dc=com"
+  bind_password: "password"
+  user_filter: "(objectClass=person)"
+  username_attribute: "uid"
+  group_attribute: "memberOf"
+
+collections:
+  # Home: fs_path placeholders: %uid% %username% %mail% %cn% %email_local%
+  # Other collections: path-based ACLs (r/w); listings show real dir, access checked on open/stat/write.
+  - path: "/home"
+    fs_path: "/srv/home/%username%"
+    home: true
+  # Shared drive: path-based rules (longest match). principle = user:<uid> or group:<ldap-dn>; mode = r, w, rw.
+  # Group principles must be full LDAP DNs matching memberOf (e.g. cn=GroupName,ou=groups,dc=example,dc=com).
+  - path: "/shared"
+    fs_path: "/srv/shared"
+    acls:
+      - path: "."
+        rules:
+          - principle: "group:cn=fs-shared-editors,ou=groups,dc=example,dc=com"
+            mode: "rw"
+          - principle: "group:cn=fs-shared-viewers,ou=groups,dc=example,dc=com"
+            mode: "r"
