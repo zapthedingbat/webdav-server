@@ -68,7 +68,7 @@ type CollectionACL struct {
 
 // ACLRule assigns one mode to a user or group. Mode: "r" (read), "w" (write, including delete), or "rw".
 type ACLRule struct {
-	Principle string `yaml:"principle"` // "user:sam" or "group:cn=admins,dc=example,dc=com"
+	Principal string `yaml:"principal"` // "user:sam" or "group:cn=admins,dc=example,dc=com"
 	Mode      string `yaml:"mode"`      // "r", "w", or "rw"
 }
 

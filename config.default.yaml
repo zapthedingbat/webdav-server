@@ -16,14 +16,14 @@ collections:
   - path: "/home"
     fs_path: "/srv/home/%username%"
     home: true
-  # Shared drive: path-based rules (longest match). principle = user:<uid> or group:<ldap-dn>; mode = r, w, rw.
-  # Group principles must be full LDAP DNs matching memberOf (e.g. cn=GroupName,ou=groups,dc=example,dc=com).
+  # Shared drive: path-based rules (longest match). principal = user:<uid> or group:<ldap-dn>; mode = r, w, rw.
+  # Group principals must be full LDAP DNs matching memberOf (e.g. cn=GroupName,ou=groups,dc=example,dc=com).
   - path: "/shared"
     fs_path: "/srv/shared"
     acls:
       - path: "."
         rules:
-          - principle: "group:cn=fs-shared-editors,ou=groups,dc=example,dc=com"
+          - principal: "group:cn=fs-shared-editors,ou=groups,dc=example,dc=com"
             mode: "rw"
-          - principle: "group:cn=fs-shared-viewers,ou=groups,dc=example,dc=com"
+          - principal: "group:cn=fs-shared-viewers,ou=groups,dc=example,dc=com"
             mode: "r"

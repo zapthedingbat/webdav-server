@@ -133,10 +133,10 @@ func effectivePerms(acl *config.CollectionACL, user *User) Permissions {
 
 	for _, pr := range acl.Rules {
 		matched := false
-		if strings.HasPrefix(pr.Principle, "user:") {
-			matched = strings.TrimPrefix(pr.Principle, "user:") == user.UID
-		} else if strings.HasPrefix(pr.Principle, "group:") {
-			dn := strings.TrimPrefix(pr.Principle, "group:")
+		if strings.HasPrefix(pr.Principal, "user:") {
+			matched = strings.TrimPrefix(pr.Principal, "user:") == user.UID
+		} else if strings.HasPrefix(pr.Principal, "group:") {
+			dn := strings.TrimPrefix(pr.Principal, "group:")
 			for _, g := range user.Groups {
 				if g == dn {
 					matched = true
